@@ -19,7 +19,7 @@ USB Mode: "Hardware CDC and JTAG"
 Zigbee Mode: "Disabled"
 
 */
-
+//Удалить эту строчку если нашли её (для теста)
 #include <SPI.h>
 #include <Wire.h>
 #include "SparkFun_SCD30_Arduino_Library.h"  // Датчик углекислого газа SCD-30
