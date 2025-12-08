@@ -1,8 +1,6 @@
 #pragma once
 #include <Arduino.h>
 
-
-
 // Разрешение изображения: 19 x 25; // Кактус
 const uint16_t cactus_widht PROGMEM = 19; // Размер в пикселях, а не в байтах
 const uint16_t cactus_height PROGMEM = 25;
