@@ -95,7 +95,7 @@ unsigned long tm1 = 18000;
 void loop() {
 
   if (tm1 <= millis()) {
-    tm1 = millis() + 60000;
+    tm1 = millis() + 121000;
     Read_sensors();
     Disp1_refresh();
 

@@ -90,7 +90,7 @@ void Disp1_refresh() {
   drawString(145 - spix, 9, "CO");
   u8g2Fonts.setFont(u8g2_font_crox1hb_tf);  // 9px
   drawString(172 - spix, 9, "2");
-  display.drawRect(0, 0, 188 - spix, 38, GxEPD_RED);
+  display.drawRect(0, 0, 187 - spix, 38, GxEPD_RED);
   //----------------------------------------------------
 
   //Вывод на дисплей показателей температуры
@@ -234,28 +234,28 @@ void Disp1_refresh() {
   u8g2Fonts.setFontDirection(0);
 
   display.drawBitmap(260, 2, wi_fi_100small, wi_fi_100small_widht, wi_fi_100small_height, GxEPD_BLACK);  //вайфай
-  u8g2Fonts.setFont(u8g2_font_crox4h_tf);  // 14 px                                               // 21px
+  u8g2Fonts.setFont(u8g2_font_crox4h_tf);                                                                // 14 px                                               // 21px
   u8g2Fonts.setForegroundColor(GxEPD_BLACK);
-  drawString(210, 10, ":");
-  drawString(235, 10, ":");
+  drawString(209, 10, ":");
+  drawString(234, 10, ":");
   char out10[2];
   dtostrf(hour, 2, 0, out10);
   if (hour < 10) {
     out10[0] = '0';
   }
-  drawString(190, 11, out10);
+  drawString(189, 11, out10);
 
   dtostrf(minute, 2, 0, out10);
   if (minute < 10) {
     out10[0] = '0';
   }
-  drawString(215, 11, out10);
+  drawString(214, 11, out10);
 
   dtostrf(second, 2, 0, out10);
   if (second < 10) {
     out10[0] = '0';
   }
-  drawString(240, 11, out10);
+  drawString(239, 11, out10);
 
   u8g2Fonts.setFont(u8g2_font_crox3tb_tf);  // 11 px                                               // 21px
   u8g2Fonts.setForegroundColor(GxEPD_BLACK);
@@ -276,9 +276,31 @@ void Disp1_refresh() {
   dtostrf(year, 4, 0, out11);
   drawString(258, 27, out11);
 
-  display.drawRect(188, 0, 108, 38, GxEPD_RED);
+  display.drawRect(187, 0, 109, 38, GxEPD_RED);
   //--------------------------------------
 
+  // Показатель освещённости
+  u8g2Fonts.setFont(u8g2_font_crox4h_tf);  // 14 px
+  lux = 40000.85;
+  if (lux <= 200) {
+    u8g2Fonts.setForegroundColor(GxEPD_RED);
+  } else {
+    u8g2Fonts.setForegroundColor(GxEPD_BLACK);
+  }
+  char out12[7];
+  if (lux < 100) {
+    dtostrf(lux, 7, 2, out12);
+    drawString(189, 56, out12);
+  } else {
+    dtostrf(lux, 7, 1, out12);
+    drawString(189, 56, out12);
+  }
+
+
+  u8g2Fonts.setForegroundColor(GxEPD_BLACK);
+  drawString(258, 56, "Lux");
+  display.drawRect(187, 39, 109, 29, GxEPD_RED);
+  //--------------------------------------
   // Полный рефреш для RBW
   display.display(false);
   // Усыпление

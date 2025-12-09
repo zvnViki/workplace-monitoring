@@ -10,9 +10,9 @@ void setup() {
       delay(5000);
     }
   }
-
-  airSensor.setMeasurementInterval(2);  // Интервал измерений. Не ставить реже 2 секунд
-   delay(2000);
+  delay(2000);
+  airSensor.setMeasurementInterval(30);  // Интервал измерений. Не ставить реже 2 секунд
+  delay(2000);
   //---------------------------------------
 
   // Проверка BME280 на работоспособность
@@ -23,7 +23,7 @@ void setup() {
     }
   }
   //---------------------------------------
-  
+
   // Проверка TSL2591 на работоспособность
   if (!tsl.begin()) {
     while (1) {
@@ -46,8 +46,9 @@ void setup() {
   //rtc.adjust(DateTime(2025, 12, 5, 14, 30, 0)); // 5 декабря 2025, 14:30:00
   //---------------------------------------
 
-//Инициализация E-inc дисплея
- while (!Serial);
-InitialiseDisplay();
-//start_image_E_inc();
+  //Инициализация E-inc дисплея
+  while (!Serial)
+    ;
+  InitialiseDisplay();
+  //start_image_E_inc();
 }
