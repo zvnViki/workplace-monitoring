@@ -5,7 +5,7 @@ void Read_sensors() {
   Read_BME280();
   Read_TSL2591();
   Read_DS3231();
-  if (day_mm != day && airSensor.dataAvailable()) {
+  if (day_mm != day && CO2 != 0) {
     day_mm = day;
     CO2_min = CO2;
     CO2_max = CO2;
