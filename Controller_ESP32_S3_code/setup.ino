@@ -54,41 +54,17 @@ void setup() {
   //----------------------------
 
   // Настройки WiFi------------
-  WiFi.mode(WIFI_AP_STA);
-
-  sett.begin();
-  sett.onBuild(build);
-
-  // базу данных запускаем до подключения к точке
-#ifdef ESP32
-  LittleFS.begin(true);
-#else
-  LittleFS.begin();
-#endif
-  db.begin();
-  db.init(kk::wifi_ssid, "");
-  db.init(kk::wifi_pass, "");
-
-  // ======= AP =======
-  WiFi.softAP("AP ESP","23456789");
-  Serial.print("AP IP: ");
-  Serial.println(WiFi.softAPIP());
-
-  // ======= STA =======
-  // если логин задан - подключаемся
-  if (db[kk::wifi_ssid].length()) {
-    WiFi.begin(db[kk::wifi_ssid], db[kk::wifi_pass]);
-    Serial.print("Connect STA");
-    int tries = 20;
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      Serial.print('.');
-      if (!--tries) break;
-    }
-    Serial.println();
-    Serial.print("IP: ");
-    Serial.println(WiFi.localIP());
-  }
-
+   // Запуск задачи под управлением 2 го ядра
+  xTaskCreatePinnedToCore(
+    WiFI_TIC,    // функция задачи
+    "WiFI_TIC",  // имя задачи
+    4096,         // размер стека
+    NULL,         // параметры
+    1,            // приоритет
+    NULL,         // хендл
+    0             // <<< номер ядра (0 или 1)
+  );
   //----------------------------
+
+
 }

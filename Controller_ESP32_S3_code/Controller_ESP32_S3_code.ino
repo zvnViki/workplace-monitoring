@@ -20,24 +20,10 @@
 
 */
 //---------------WiFi------------
-#include <GyverDBFile.h>
-#include <LittleFS.h>
-// база данных для хранения настроек
-// будет автоматически записываться в файл при изменениях
-GyverDBFile db(&LittleFS, "/data.db"); //База данных инициализация
-
-
-#include <SettingsESP.h>
-// указывается заголовок меню, подключается база данных
-SettingsESP sett("WiFi config", &db);
-
-DB_KEYS(
-    kk,
-    wifi_ssid,
-    wifi_pass,
-    apply);
-//----------------------------------------------
-
+#include <GyverDBFile.h>  // База данных
+#include <LittleFS.h>     // Автономное хранение
+#include <SettingsESP.h>  //Веб интерфейс
+//-------------------------------
 #include <SPI.h>
 #include <Wire.h>
 #include "SparkFun_SCD30_Arduino_Library.h"  // Датчик углекислого газа SCD-30
@@ -162,7 +148,4 @@ void loop() {
     Serial.println(" (lux)  ");
     Serial.println("------------------------------------------------------------");
   }
-  //----------WiFi------------------
-  sett.tick();
-  //--------------------------------
 }

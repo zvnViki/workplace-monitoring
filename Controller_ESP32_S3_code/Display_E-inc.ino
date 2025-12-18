@@ -233,8 +233,11 @@ void Disp1_refresh() {
   drawString(275, -10, out9);
   u8g2Fonts.setFontDirection(0);
 
-  display.drawBitmap(260, 2, wi_fi_100small, wi_fi_100small_widht, wi_fi_100small_height, GxEPD_BLACK);  //вайфай
-  u8g2Fonts.setFont(u8g2_font_crox4h_tf);                                                                // 14 px                                               // 21px
+  if (WiFi.status() == WL_CONNECTED) {
+    display.drawBitmap(260, 2, wi_fi_100small, wi_fi_100small_widht, wi_fi_100small_height, GxEPD_BLACK);  //вайфай
+  }
+
+  u8g2Fonts.setFont(u8g2_font_crox4h_tf);  // 21px
   u8g2Fonts.setForegroundColor(GxEPD_BLACK);
   drawString(209, 10, ":");
   drawString(234, 10, ":");
@@ -257,7 +260,7 @@ void Disp1_refresh() {
   }
   drawString(239, 11, out10);
 
-  u8g2Fonts.setFont(u8g2_font_crox3tb_tf);  // 11 px                                               // 21px
+  u8g2Fonts.setFont(u8g2_font_crox3tb_tf);  // 11 px
   u8g2Fonts.setForegroundColor(GxEPD_BLACK);
   drawString(231, 26, ":");
   drawString(254, 26, ":");
