@@ -4,14 +4,14 @@
                                                                              CPU Frequency: "240MHz (WiFi)"
                                                                              Core Debug Level: "None"
                                                                              USB DFU On Boot: "Enabled (Requires USB-OTG Mode)"
-                                                                             Erase All Flash Before Sketch Upload: "Disabled"
+                                                                             Erase All Flash Before Sketch Upload: "Enablet" 
                                                                              Events Run On: "Core 1"
                                                                              Flash Mode: "QIO 80MHz"
                                                                              Flash Size: "16MB (128Mb)"
                                                                              JTAG Adapter: "Disabled"
                                                                              Arduino Runs On: "Core 1"
                                                                              USB Firmware MSC On Boot: "Disabled"
-                                                                             Partition Scheme: "16M Flash (2MB APP/12.5MB FATFS)"
+                                                                             Partition Scheme: "8M with spiffs (3MB APP/1.5MB SPIFFS)"
                                                                              PSRAM: "OPI PSRAM"
                                                                              Upload Mode: "UARTO / Hardware CDC"
                                                                              Upload Speed: "921600"
@@ -19,7 +19,13 @@
                                                                              Zigbee Mode: "Disabled"
 
 */
-//Удалить эту строчку если нашли её (для теста)
+//---------------WiFi------------
+
+#include <GyverDBFile.h>  // База данных
+#include <LittleFS.h>     // Автономное хранение
+#include <SettingsESP.h>  //Веб интерфейс
+//#include <GyverHTTP.h>   //HTTP Client. для передачи данных на сервер.
+//-------------------------------
 #include <SPI.h>
 #include <Wire.h>
 #include "SparkFun_SCD30_Arduino_Library.h"  // Датчик углекислого газа SCD-30
@@ -68,7 +74,7 @@ GxEPD2_3C<GxEPD2_290_C90c, GxEPD2_290_C90c::HEIGHT> display(GxEPD2_290_C90c(EPD_
 U8G2_FOR_ADAFRUIT_GFX u8g2Fonts;                                                                                  // Select u8g2 font from here: https://github.com/olikraus/u8g2/wiki/fntlistall
 
 // Переменные хранящие значения с модулей
-byte batt = 100; // %
+byte batt = 100;  // %
 // DS3231
 int year;
 byte month;
@@ -87,26 +93,16 @@ float RH_BME280;    // (%)
 float Alt;          // (m)
 // TSL2591
 float lux;  // (Lux)
-//Минимальное и максимальное значение за сутки 
- byte day_mm = 100;
-unsigned int CO2_min;// (ppm)
-unsigned int CO2_max;// (ppm)
-float Temp_BME280_min;  // (°C)
-float Temp_BME280_max;  // (°C)
-float RH_BME280_min;    // (%)
-float RH_BME280_max;    // (%)
-//Для графика 
-int disp_T = 0; 
-int Temp_Data[104];
+
 //переменные для работы
-unsigned long tm1 = 18000;
+unsigned long tm1 = 18000; // задержка старта отображения.
 
 
 
 void loop() {
 
   if (tm1 <= millis()) {
-    tm1 = millis() + 121000;
+    tm1 = millis() + 60000;
     Read_sensors();
     Disp1_refresh();
 
