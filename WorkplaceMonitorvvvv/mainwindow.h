@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QImage>
-#include "camera_thread.h"
+#include <QSystemTrayIcon>
+#include <QSoundEffect>
+
+class MediaPipePose;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,11 +20,20 @@ public:
     ~MainWindow();
 
 private slots:
-    void onFrame(const QImage &img, bool postureBad);
+    void onCalibrateClicked();
+    void onBadPostureWarning();
+    void onBadPostureCleared();
+
+#ifdef Q_OS_WIN
+private:
+    void embedOpenCVWindow();
+#endif
 
 private:
     Ui::MainWindow *ui;
-    CameraThread *cameraThread;
+    MediaPipePose *pose;
+    QSystemTrayIcon *trayIcon;
+    QSoundEffect *alertSound;
 };
 
 #endif
