@@ -109,7 +109,7 @@ void MainWindow::onPresenceTimeUpdated(int seconds)
     int s = seconds % 60;
 
     ui->labelWorkTime->setText(
-        QString("%1:%2:%3")
+        QString("Time at the workplace: %1:%2:%3")
             .arg(h, 2, 10, QChar('0'))
             .arg(m, 2, 10, QChar('0'))
             .arg(s, 2, 10, QChar('0'))
