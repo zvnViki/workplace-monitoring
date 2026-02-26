@@ -17,7 +17,7 @@
                                                                              Upload Speed: "921600"
                                                                              USB Mode: "Hardware CDC and JTAG"
                                                                              Zigbee Mode: "Disabled"
-
+Егор лох тест
 */
 //---------------WiFi------------
 
